@@ -4,12 +4,21 @@
   "description": "Main directory for five solidity based smart contracts and React frontend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cli": "npm ",
+    "client": "npm start --prefix client"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "create-react-app": "^5.0.0"
+    "create-react-app": "^5.0.0",
+    "mocha": "^9.2.0"
+  },
+  "dependencies": {
+    "ethers": "^5.5.3",
+    "ganache": "^7.0.1",
+    "solc": "^0.8.11",
+    "web3": "^1.7.0"
   }
 }
