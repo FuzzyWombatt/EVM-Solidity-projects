@@ -30,9 +30,13 @@ const filterContracts = (contracts) => {
 }
 
 export const compileContracts = (contracts) => {
-    let str = "test";
+    let str = "";
 
     const contractsArr = filterContracts(contracts);
+
+    if(contractsArr.length === 0){
+        return console.log(chalk.red('\nNo contracts to compile'))
+    }
 
     
     const compilerInput = {
