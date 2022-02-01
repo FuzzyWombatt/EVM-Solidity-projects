@@ -1,11 +1,11 @@
 {
   "name": "solidity-projects",
-  "version": "1.0.0",
-  "description": "Main directory for deploying, compiling, and testing solidity contracts and the react front end",
-  "main": "project-cli.js",
+  "version": "0.1.0",
+  "description": "Simple node app to compile solidity contracts, test solidity contracts, and programatically access the etheruem blockchain",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm start project-cli",
+    "start": "npm start app",
     "client": "npm start --prefix client",
     "ganache": "ganache --wallet.seed myCustomSeed"
   },
@@ -16,6 +16,7 @@
     "create-react-app": "^5.0.0"
   },
   "dependencies": {
+    "chalk": "^5.0.0",
     "ethers": "^5.5.3",
     "ganache": "^7.0.1",
     "mocha": "^9.2.0",
