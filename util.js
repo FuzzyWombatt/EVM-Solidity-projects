@@ -12,7 +12,7 @@ export const listContracts = () => {
 
     files.forEach(file => {
         if(path.extname(file) === ".sol"){
-            console.log(chalk.red(file))
+            console.log(chalk.blue(file))
         }
     })
 }

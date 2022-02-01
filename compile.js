@@ -1,29 +1,40 @@
-const path = require('path');
-const fs = require('fs');
-const solc = require('solc');
+import path, {dirname} from 'path';
+import { fileURLToPath } from 'url';
+import fs, { readFileSync } from 'fs'
+import solc from 'solc'
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const contractsPath = path.resolve(__dirname, 'contracts');
 const buildPath = path.resolve(__dirname, 'build');
 
+const filterContracts = (contracts) => {
+    let contractsArr = contracts.split(', ');
 
-const contractPath = (contractName) => {
-   return path.resolve(__dirname, 'contracts', contractName);
+    const contractFiles = fs.readdirSync(contractsPath);
+
+    return contractsArr;
+
 }
 
-
-
-const source = fs.readFileSync(contractPath, 'utf-8');
-
-const compileContracts = (contracts) => {
+export const compileContracts = (contracts) => {
     let str = "";
-    const contractArr = contracts.split(", ");
+
+    const contractsArr = filterContracts(contracts);
+
+    
+    const compilerInput = {
+        language: "Solidity",
+        sources: contractsArr.reduce((previous, contract) => {
+            const source = fs.readFileSync(path.resolve(contractsPath, contract), 'utf-8');
+            return {...previous, [contract]: {content: source}};
+        }, {})
+
+    }
+    //compile all contracts
+    const compiled = JSON.parse(solc.compile(JSON.stringify(compilerInput)));
 
 
 
     console.log(str);
 }
-
-module.exports = {
-
-}
-
