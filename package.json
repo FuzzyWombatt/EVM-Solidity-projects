@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "description": "Simple node app to compile solidity contracts, test solidity contracts, and programatically access the etheruem blockchain",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm start app",
-    "run": "npm start app",
+    "start": "node app.js",
     "client": "npm start --prefix client",
     "ganache": "ganache --wallet.seed myCustomSeed"
   },

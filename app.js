@@ -1,7 +1,15 @@
-const yargs = require('yargs');
-const chalk = require('chalk')
+//had to use es6 modules in order to have chalk functionality
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers'
 
-yargs.command({
+import { listContracts } from './util.js';
+
+
+const cArgs = yargs(hideBin(process.argv));
+
+cArgs.version('0.1.0');
+
+cArgs.command({
     command: 'compile',
     describe: 'Compile a solidity contract, or a set of contracts',
     aliases: 'C',
@@ -15,16 +23,13 @@ yargs.command({
     handler: (argv) => {
         console.log(argv.contracts)
     }
-})
+}).parse();
 
-yargs.command({
+cArgs.command({
     command: 'list',
     aliases: 'ls',
     describe: 'List all the contracts available',
-    handler: () => {
-        console.log(chalk.green('list contracts'));
-    }
-});
+    handler: () => listContracts()
+}).parse();
 
 
-yargs.parse(process.argv.slice(2));
