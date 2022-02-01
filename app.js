@@ -1,11 +1,10 @@
 //had to use es6 modules in order to have chalk functionality
 import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers'
 
 import { listContracts } from './util.js';
+import { compileContracts } from './compile.js';
 
-
-const cArgs = yargs(hideBin(process.argv));
+const cArgs = yargs();
 
 cArgs.version('0.1.0');
 
@@ -21,15 +20,15 @@ cArgs.command({
         }
     },
     handler: (argv) => {
-        console.log(argv.contracts)
+        compileContracts(argv.contracts);
     }
-}).parse();
+});
 
 cArgs.command({
     command: 'list',
     aliases: 'ls',
     describe: 'List all the contracts available',
     handler: () => listContracts()
-}).parse();
-
-
+});
+//doing this instead of yargs(hideBin(process.argv)) fixes double call on methods
+cArgs.parse(process.argv.slice(2));

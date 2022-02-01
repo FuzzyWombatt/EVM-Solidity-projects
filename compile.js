@@ -2,6 +2,7 @@ import path, {dirname} from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs'
 import solc from 'solc'
+import chalk from 'chalk'
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -19,6 +20,7 @@ const filterContracts = (contracts) => {
         if(check !== undefined){
             return true;
         }else{
+            console.log(chalk.red(`${contract} not found, couldn't compile`))
             return false
         }
 
@@ -28,7 +30,7 @@ const filterContracts = (contracts) => {
 }
 
 export const compileContracts = (contracts) => {
-    let str = "";
+    let str = "test";
 
     const contractsArr = filterContracts(contracts);
 
@@ -50,8 +52,9 @@ export const compileContracts = (contracts) => {
     }
     //compile all contracts
     const compiled = JSON.parse(solc.compile(JSON.stringify(compilerInput)));
+    console.log(compiled)
 
-
+    //TODO: place in build folder....rewrite over prviousd code....add timestamps?
 
     console.log(str);
 }
