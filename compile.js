@@ -1,6 +1,6 @@
 import path, {dirname} from 'path';
 import { fileURLToPath } from 'url';
-import fs, { readFileSync } from 'fs'
+import fs from 'fs'
 import solc from 'solc'
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -13,8 +13,18 @@ const filterContracts = (contracts) => {
 
     const contractFiles = fs.readdirSync(contractsPath);
 
-    return contractsArr;
+    contractsArr = contractsArr.filter(contract => {
+        const check = contractFiles.find(ele => ele === contract);
 
+        if(check !== undefined){
+            return true;
+        }else{
+            return false
+        }
+
+    })
+
+    return contractsArr;
 }
 
 export const compileContracts = (contracts) => {
@@ -28,7 +38,14 @@ export const compileContracts = (contracts) => {
         sources: contractsArr.reduce((previous, contract) => {
             const source = fs.readFileSync(path.resolve(contractsPath, contract), 'utf-8');
             return {...previous, [contract]: {content: source}};
-        }, {})
+        }, {}),
+        settings: {
+            outputSelection: {
+              "*": {
+                "*": ["abi", "evm.bytecode.object"],
+              }
+            }
+        }
 
     }
     //compile all contracts
