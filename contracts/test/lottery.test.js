@@ -1,3 +1,5 @@
+import assert from 'assert'
+import chai from 'chai'
 import Ganache from 'ganache';
 import Web3 from 'web3';
 import { compile } from './util.js';
@@ -9,16 +11,16 @@ let contract;
 
 beforeEach(async () => {
     const { bytecode, abi } = compile('Lottery.sol');
+   
     accounts = await web3.eth.getAccounts();
-
-    console.log(abi);
-    console.log(bytecode)
 
     contract = await new web3.eth.Contract(abi)
         .deploy({ data: bytecode, arguments: [] })
         .send({ from: accounts[0], gas: '1000000' });
 });
 
-describe('Test', () => {
-    it('deploys the test contract', () => {});
+describe('Lottery', () => {
+    it('deploys the Lottery contract', () => {
+        assert.ok(contract.options.address);
+    });
 });
