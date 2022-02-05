@@ -14,7 +14,7 @@ cArgs.command({
     aliases: 'C',
     builder: {
         contracts: {
-            describe: 'Name/title of contract or contracts. For multiple contracts seperate by a comma and a space EX: <"contract1, contract2">',
+            describe: 'Name/title of contract or contracts. For multiple contracts seperate by a comma and a space EX: <"contract1, contract2">. Contract name must match exactly as it is in directory',
             demandOption: true,
             type: 'string'
         }
