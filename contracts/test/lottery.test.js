@@ -8,7 +8,7 @@ let accounts;
 let contract;
 
 beforeEach(async () => {
-    const { bytecode, abi } = compile('Test.sol');
+    const { bytecode, abi } = compile('Lottery.sol');
     accounts = await web3.eth.getAccounts();
 
     console.log(abi);
