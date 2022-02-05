@@ -21,7 +21,7 @@ export const filterContracts = (contracts, filePath) => {
         }
 
     })
-    console.log(contractsArr);
+    //console.log(contractsArr);
 
     return contractsArr;
 }

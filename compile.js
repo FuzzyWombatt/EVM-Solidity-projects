@@ -1,6 +1,6 @@
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import fs from 'fs';
+import fs from 'fs-extra';
 import solc from 'solc';
 import chalk from 'chalk';
 import { filterContracts } from './util.js';
@@ -11,15 +11,15 @@ const contractsPath = path.resolve(__dirname, 'contracts');
 const buildPath = path.resolve(__dirname, 'build');
 
 export const compileContracts = (contracts) => {
-    const contractsArr = filterContracts(contracts, contractsPath);
+    const contractFiles = filterContracts(contracts, contractsPath);
 
-    if (contractsArr.length === 0) {
+    if (contractFiles.length === 0) {
         return console.log(chalk.red('\nNo contracts to compile'));
     }
 
     const compilerInput = {
         language: 'Solidity',
-        sources: contractsArr.reduce((previous, contract) => {
+        sources: contractFiles.reduce((previous, contract) => {
             const source = fs.readFileSync(
                 path.resolve(contractsPath, contract),
                 'utf-8',    
@@ -44,13 +44,23 @@ export const compileContracts = (contracts) => {
         fs.mkdirSync(buildPath, { recursive: true });
     }
 
+    contractFiles.map(file => {
+        const compiledContracts = Object.keys(compiled.contracts[file]);
+        compiledContracts.map(contract =>{
+            fs.outputJsonSync(
+                path.resolve(buildPath, contract+'.json'),
+                compiled.contracts[file][contract]
+            );
+        });
+    });
+
     let compileString = 'Compiled contracts ';
     //string concat grammer styling...necesary no but I want it this way
-    contractsArr.map((contract, ind) => {
+    contractFiles.map((contract, ind) => {
         if(ind === 0){
             compileString += contract;
-        }else if(ind === (contractsArr.length-1)){
-            if(contractsArr.length === 2){
+        }else if(ind === (contractFiles.length-1)){
+            if(contractFiles.length === 2){
                 compileString += ' and ' + contract;
             }else{
                 compileString += ', and ' + contract;
