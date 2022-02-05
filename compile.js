@@ -11,6 +11,10 @@ const contractsPath = path.resolve(__dirname, 'contracts');
 const buildPath = path.resolve(__dirname, 'build');
 
 export const compileContracts = (contracts) => {
+    if(typeof contracts !== string){
+        return console.log(chalk.red('Improper format of option. Must be a string input'));
+    }
+
     const contractFiles = filterContracts(contracts, contractsPath);
 
     if (contractFiles.length === 0) {
