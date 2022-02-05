@@ -1,0 +1,21 @@
+import Ganache from 'ganache';
+import Web3 from 'web3';
+import { compile } from './util.js';
+
+const web3 = new Web3(Ganache.provider());
+
+let accounts;
+let contract;
+
+beforeEach(async () => {
+    const { bytecode, abi } = compile('Test.sol');
+    accounts = await web3.eth.getAccounts();
+
+    contract = await new web3.eth.Contract(JSON.parse(interface))
+        .deploy({ data: bytecode, arguments: [] })
+        .send({ from: accounts[0], gas: '1000000' });
+});
+
+describe('Test', () => {
+    it('deploys the test contract', () => {});
+});
