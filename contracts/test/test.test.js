@@ -24,13 +24,15 @@ describe('Tests for Test.sol contract',() => {
         chaiAssert.isOk(contract.options.address, 'Contract has an address, is deployed');
     });
 
-    it('Receives eth from an external account', () => {
-    });
-
     it('Tests getBalance() function and returns apropriate balance of 0 when instanced', async () => {
         const balance = parseInt(await contract.methods.getBalance().call());
         chaiAssert.typeOf(balance, 'number', 'Balance is not the correct type');
         chaiAssert.equal(balance, 0, 'Balance equals 0 when Initialized')
-    })
+    });
 
+    it('Receives eth from an external account', async () => {
+        await web3.eth.sendTransaction({to: contract.options.address, from: accounts[0], value: 1000000000000000000})
+        const balance = parseInt(await contract.methods.getBalance().call());
+        chaiAssert.equal(balance, 1000000000000000000, 'Balance does not equal amount received')
+    });
 });

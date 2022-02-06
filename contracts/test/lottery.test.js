@@ -24,4 +24,8 @@ describe('Lottery', () => {
     it('Deploys the Lottery contract', () => {
         chaiAssert.isOk(contract.options.address, 'Contract has an address, is deployed');
     });
+
+    it('Allows an account to enter the lottery', async () => {
+        
+    })
 });
