@@ -1,4 +1,3 @@
-import assert from 'assert'
 import chai from 'chai'
 import Ganache from 'ganache';
 import Web3 from 'web3';
@@ -23,7 +22,7 @@ beforeEach(async () => {
 
 describe('Test', () => {
     it('deploys the test contract', () => {
-        assert.ok(contract.options.address);
+        chaiAssert.isOk(contract.options.address, 'Contract has an address, is deployed');
     });
 
     it('receives eth from an external account', () => {
