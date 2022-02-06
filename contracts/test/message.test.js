@@ -16,6 +16,12 @@ beforeEach(async () => {
     accounts = await web3.eth.getAccounts();
 
     contract = await new web3.eth.Contract(abi)
-        .deploy({ data: bytecode, arguments: [] })
+        .deploy({ data: bytecode, arguments: [{message: 'message'}] })
         .send({ from: accounts[0], gas: '1000000' });
+});
+
+describe('Message', () => {
+    it('deploys the Message contract', () => {
+        assert.ok(contract.options.address);
+    });
 });

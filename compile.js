@@ -11,7 +11,7 @@ const contractsPath = path.resolve(__dirname, 'contracts');
 const buildPath = path.resolve(__dirname, 'build');
 
 export const compileContracts = (contracts) => {
-    if(typeof contracts !== string){
+    if(typeof contracts !== 'string'){
         return console.log(chalk.red('Improper format of option. Must be a string input'));
     }
 
@@ -33,16 +33,14 @@ export const compileContracts = (contracts) => {
         settings: {
             outputSelection: {
                 '*': {
-                    '*': ['abi', 'evm.bytecode.object'],
+                    '*': ['abi', 'evm.bytecode.object', 'evm.bytecode.opcodes'],
                 },
             },
         },
     };
     //compile all contracts
     const compiled = JSON.parse(solc.compile(JSON.stringify(compilerInput)));
-    console.log(compiled)
 
-    //console.log(compiled.contracts[contractsArr[0]])
     //make sure buildpath exists
     if (!fs.existsSync(buildPath)) {
         fs.mkdirSync(buildPath, { recursive: true });
