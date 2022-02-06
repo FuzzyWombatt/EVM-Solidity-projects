@@ -6,7 +6,7 @@ contract Lottery{
     //external account that owns contract and is public
     address public manager;
     //marks a dynamic array of payable address
-    address payable[] public players;
+    address payable[] private players;
 
     constructor(){
         manager = msg.sender;
@@ -24,6 +24,10 @@ contract Lottery{
         require(msg.sender == manager);
         //address(this) refers to the contract address itself
         return address(this).balance;
+    }
+    //for some reason this is necesary for testing to avaoid issues with players() getter
+    function getPlayers() public view returns(address payable[] memory){
+        return players;
     }
 
     function random() internal view returns(uint){

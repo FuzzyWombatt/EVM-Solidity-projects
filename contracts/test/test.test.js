@@ -31,8 +31,8 @@ describe('Tests for Test.sol contract',() => {
     });
 
     it('Receives eth from an external account', async () => {
-        await web3.eth.sendTransaction({to: contract.options.address, from: accounts[0], value: 1000000000000000000})
+        await web3.eth.sendTransaction({to: contract.options.address, from: accounts[0], value: web3.utils.toWei('1', 'ether')})
         const balance = parseInt(await contract.methods.getBalance().call());
-        chaiAssert.equal(balance, 1000000000000000000, 'Balance does not equal amount received')
+        chaiAssert.equal(balance, web3.utils.toWei('1', 'ether'), 'Balance does not equal amount received')
     });
 });
