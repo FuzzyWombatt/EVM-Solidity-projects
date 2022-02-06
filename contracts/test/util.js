@@ -26,10 +26,7 @@ export const compile = (contract) => {
 
     const compiledContract = JSON.parse(solc.compile(JSON.stringify(compilerInput))).contracts[contract][contractKey];
 
-    //const {evm: {bytecode: {object: bytecode}}, abi} = compiledContract
-    console.log(compiledContract)
+    const {evm: {bytecode: {object: bytecode}}, abi} = compiledContract
     
-    //return {bytecode, abi};
+    return {bytecode, abi};
 }
-
-compile('Test.sol');

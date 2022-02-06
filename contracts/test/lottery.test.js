@@ -1,8 +1,9 @@
-import assert from 'assert'
 import chai from 'chai'
 import Ganache from 'ganache';
 import Web3 from 'web3';
 import { compile } from './util.js';
+
+const chaiAssert = chai.assert;
 
 const web3 = new Web3(Ganache.provider());
 
@@ -20,7 +21,7 @@ beforeEach(async () => {
 });
 
 describe('Lottery', () => {
-    it('deploys the Lottery contract', () => {
-        assert.ok(contract.options.address);
+    it('Deploys the Lottery contract', () => {
+        chaiAssert.isOk(contract.options.address, 'Contract has an address, is deployed');
     });
 });

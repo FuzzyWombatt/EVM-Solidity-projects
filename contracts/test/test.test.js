@@ -3,7 +3,6 @@ import Ganache from 'ganache';
 import Web3 from 'web3';
 import { compile } from './util.js';
 
-const chaiExpect = chai.expect;
 const chaiAssert = chai.assert;
 
 const web3 = new Web3(Ganache.provider());
@@ -20,18 +19,18 @@ beforeEach(async () => {
         .send({ from: accounts[0], gas: '1000000' });
 });
 
-describe('Test', () => {
-    it('deploys the test contract', () => {
+describe('Tests for Test.sol contract',() => {
+    it('Deploys the Test contract', () => {
         chaiAssert.isOk(contract.options.address, 'Contract has an address, is deployed');
     });
 
-    it('receives eth from an external account', () => {
-        console.log('eth sent');
+    it('Receives eth from an external account', () => {
     });
 
-    it('Contract has a balance of some kind of number', async () => {
-        const balance = await contract.methods.getBalance().call();
-        chaiAssert.typeOf(balance, 'string', 'Balance is the correct type');
+    it('Tests getBalance() function and returns apropriate balance of 0 when instanced', async () => {
+        const balance = parseInt(await contract.methods.getBalance().call());
+        chaiAssert.typeOf(balance, 'number', 'Balance is not the correct type');
+        chaiAssert.equal(balance, 0, 'Balance equals 0 when Initialized')
     })
 
 });
