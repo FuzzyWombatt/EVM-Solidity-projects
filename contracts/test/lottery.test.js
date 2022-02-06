@@ -120,4 +120,6 @@ describe('Lottery', () => {
             chaiAssert.isNotEmpty(err, 'contract did not fail for restriciton');
         }
     });
+
+    //TODO: full end to end contract test
 });
