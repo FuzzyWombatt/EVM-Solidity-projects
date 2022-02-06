@@ -50,5 +50,4 @@ cArgs.command({
     handler: () => listContracts()
 });
 
-//doing this instead of yargs(hideBin(process.argv)) fixes double call on methods
 cArgs.parse(process.argv.slice(2));

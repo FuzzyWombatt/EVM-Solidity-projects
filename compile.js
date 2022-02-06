@@ -38,10 +38,9 @@ export const compileContracts = (contracts) => {
             },
         },
     };
-    //compile all contracts
+
     const compiled = JSON.parse(solc.compile(JSON.stringify(compilerInput)));
 
-    //make sure buildpath exists
     if (!fs.existsSync(buildPath)) {
         fs.mkdirSync(buildPath, { recursive: true });
     }
@@ -57,7 +56,7 @@ export const compileContracts = (contracts) => {
     });
 
     let compileString = 'Compiled contracts ';
-    //string concat grammer styling...necesary no but I want it this way
+
     contractFiles.map((contract, ind) => {
         if(ind === 0){
             compileString += contract;

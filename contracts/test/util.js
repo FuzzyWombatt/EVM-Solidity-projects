@@ -21,9 +21,6 @@ export const compile = (contract) => {
             },
         },
     };
-
-    //destructure all of the bullshit from the compiled contract
-
     const contractKey = path.parse(contract).name;
 
     const compiledContract = JSON.parse(solc.compile(JSON.stringify(compilerInput))).contracts[contract][contractKey];

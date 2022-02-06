@@ -2,7 +2,6 @@
 
 pragma solidity >=0.5.0 <0.9.0;
 
-//extremely simple contract that is used for testing purposes for setting/testing up programtic chain
 contract Test{
     receive() external payable {       
     }
