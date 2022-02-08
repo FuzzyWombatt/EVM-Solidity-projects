@@ -65,6 +65,12 @@ contract Auction {
         bidIncrement = 100;
     }
 
+    function placeBid() public payable auctionRunning notOwner{
+        require( msg.value >= 100);
+
+        uint currentBid = bids[msg.sender] + msg.value;
+    }
+
 
 
 
