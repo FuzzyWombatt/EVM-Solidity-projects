@@ -74,19 +74,30 @@ contract Auction {
         }
     }
 
-    function placeBid() public payable auctionRunning notOwner{
+    function placeBid() public payable auctionRunning notOwner returns(bool){
         require( msg.value >= 100);
 
         uint currentBid = bids[msg.sender] + msg.value;
 
         require(currentBid > highestBid);
 
+        bids[msg.sender] = currentBid;
+
         if(currentBid <= bids[highestBidder]){
             highestBindingBid = min(currentBid + bidIncrement, bids[highestBidder]);
         }else{
             highestBindingBid = min(currentBid, bids[highestBidder] + bidIncrement);
+            highestBidder = payable(msg.sender);
         }
+
+        return true;
     }
+
+    function cancelAuction() public onlyOwner beforeEnd{
+        auctionState = State.Canceled;
+    }
+
+
 
 
 
