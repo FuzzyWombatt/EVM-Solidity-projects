@@ -19,6 +19,7 @@ contract Auction {
     //enum state of the action
     State public auctionState;
 
+    uint public highestBindingBid;
     uint public highestBid;
     //address is payable in case auction is prematuraly canceled
     address payable public highestBidder;
@@ -65,11 +66,28 @@ contract Auction {
         bidIncrement = 100;
     }
 
+    function min(uint x, uint y) pure internal returns(uint){
+        if(x <= y){
+            return x;
+        }else{
+            return y;
+        }
+    }
+
     function placeBid() public payable auctionRunning notOwner{
         require( msg.value >= 100);
 
         uint currentBid = bids[msg.sender] + msg.value;
+
+        require(currentBid > highestBid);
+
+        if(currentBid <= bids[highestBidder]){
+            highestBindingBid = min(currentBid + bidIncrement, bids[highestBidder]);
+        }else{
+            highestBindingBid = min(currentBid, bids[highestBidder] + bidIncrement);
+        }
     }
+
 
 
 
