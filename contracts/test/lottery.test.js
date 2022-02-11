@@ -61,11 +61,6 @@ describe('Lottery', () => {
     it('Checks for multiple accounts entry into the lottery', async () => {
         await web3.eth.sendTransaction({
             to: contract.options.address,
-            from: accounts[0],
-            value: web3.utils.toWei('0.1', 'ether'),
-        });
-        await web3.eth.sendTransaction({
-            to: contract.options.address,
             from: accounts[1],
             value: web3.utils.toWei('0.1', 'ether'),
         });
@@ -74,21 +69,26 @@ describe('Lottery', () => {
             from: accounts[2],
             value: web3.utils.toWei('0.1', 'ether'),
         });
+        await web3.eth.sendTransaction({
+            to: contract.options.address,
+            from: accounts[3],
+            value: web3.utils.toWei('0.1', 'ether'),
+        });
 
         const players = await contract.methods.getPlayers().call();
         chaiAssert.equal(
             players[0],
-            accounts[0],
-            'Player is not in players array',
-        );
-        chaiAssert.equal(
-            players[1],
             accounts[1],
             'Player is not in players array',
         );
         chaiAssert.equal(
-            players[2],
+            players[1],
             accounts[2],
+            'Player is not in players array',
+        );
+        chaiAssert.equal(
+            players[2],
+            accounts[3],
             'Player is not in players array',
         );
         chaiAssert.equal(
@@ -121,5 +121,52 @@ describe('Lottery', () => {
         }
     });
 
-    //TODO: full end to end contract test
+    it('Runs through entire contract end to end', async () => {
+        await web3.eth.sendTransaction({
+            to: contract.options.address,
+            from: accounts[1],
+            value: web3.utils.toWei('0.1', 'ether'),
+        });
+        await web3.eth.sendTransaction({
+            to: contract.options.address,
+            from: accounts[2],
+            value: web3.utils.toWei('0.1', 'ether'),
+        });
+        await web3.eth.sendTransaction({
+            to: contract.options.address,
+            from: accounts[3],
+            value: web3.utils.toWei('0.1', 'ether'),
+        });
+
+        const manager = await contract.methods.manager().call();
+        const players = await contract.methods.getPlayers().call();
+
+        chaiAssert.equal(
+            manager,
+            accounts[0],
+            'Manager and deployer are not the same',
+        );
+        const players = await contract.methods.getPlayers().call();
+        chaiAssert.equal(
+            players[0],
+            accounts[0],
+            'Player is not in players array',
+        );
+        chaiAssert.equal(
+            players[1],
+            accounts[1],
+            'Player is not in players array',
+        );
+        chaiAssert.equal(
+            players[2],
+            accounts[2],
+            'Player is not in players array',
+        );
+        chaiAssert.equal(
+            players.length,
+            3,
+            'Players does not have a length of 3',
+        );
+
+    });
 });

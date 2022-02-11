@@ -6,11 +6,16 @@ contract Lottery{
     address public manager;
     address payable[] private players;
 
+    modifier notOwner {
+        require(msg.sender != manager);
+        _;
+    }
+
     constructor(){
         manager = msg.sender;
     }
 
-    receive() external payable{
+    receive() external payable notOwner{
         require(msg.value == 0.1 ether);
 
         players.push(payable(msg.sender));
